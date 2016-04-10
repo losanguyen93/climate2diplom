@@ -124,8 +124,7 @@ setInterval(function () {
 ).then(function(result1, result2) {
     var contTemp_2 = result1[0];
     var contHum_2 = result2[0];
-    
-    var date = (contTemp_2[i].TS).slice(0,19) + " GTM+0300";
+    var date = (contTemp_2[0].TS).slice(0,19) + " GTM+0300";
     myLineChart.addData([contTemp_2[0].TEMP, contHum_2[0].HUMIDITY], date);
     myDoughnutChart.segments[0].value = contTemp_2[0].TEMP;
     myDoughnutChart_Hum.segments[0].value = contHum_2[0].HUMIDITY;   
