@@ -14,10 +14,35 @@
      font-family: Verdana, Arial, Helvetica, sans-serif; /* Семейство шрифта */
      color: #FF0000; /* Цвет текста */
     }
+    .indicator_L { 
+     font-size: 200%; /* Размер шрифта */
+     font-family: Verdana, Arial, Helvetica, sans-serif; /* Семейство шрифта */
+    }
+    .padding_row_btn {
+      padding: 15px;
+    }
+    .padding_row_form {
+      padding: 15px;
+      border: 4px double black;
+      background: #cad8d0;
+    }
   </style>
-    <script type="text/javascript">    
+    <script type="text/javascript"> 
+
 $(document).ready(function(){
-    document.getElementById('indicator').innerHTML = 'OFF';
+    var Txt1 = "";
+    var Txt2 = "";
+    document.getElementById('indicator').innerHTML = 'Device status: OFF';
+//___________________________________________________________________
+var $buttonForm = document.querySelector('#turn-btn-form');
+  $buttonForm.onclick = function() {
+    //console.log('ok_btn');
+    Txt1 = document.getElementById('Hum_input').value
+    Txt2 = document.getElementById('Temp_input').value
+    document.getElementById('indicator_1').innerHTML = Txt1 + " %";
+    document.getElementById('indicator_2').innerHTML = Txt2 + " *C";
+  };
+//___________________________________________________________________
     var data = {
     labels: [],
     datasets: [
@@ -128,24 +153,44 @@ var socket = new WebSocket('ws://diplomexam.mybluemix.net/data');
     var item = JSON.parse(e.data);
     if (item.topic == "light"){
       var SunLight = 255 * Math.pow(item.data,(-10/9));
-      console.log(SunLight);
+      //console.log(SunLight);
       document.getElementById("lux_light").innerHTML = "LIGHT Sensor =" + SunLight + " lx";
       var persent = Math.ceil((SunLight/750)*100); ;
-      console.log(persent);
+      //console.log(persent);
       document.getElementById("persentLight").innerHTML = persent + " %";
       document.getElementById('ProgressBar').style.width = persent+"%";
-      console.log(item.data);
+      //console.log(item.data);
+    }
+    if (item.topic == "temperature"){
+      var temp_ws = item.data;
+      if (Txt2 != "")
+      {
+        var critical_temp = Number(Txt2);
+        if (temp_ws >= critical_temp) {
+          socket.send("sms");
+        };
+      }
+    }
+    if (item.topic == "humidity"){
+      var hum_ws = item.data;
+      if (Txt1 != "")
+      {
+        var critical_hum = Number(Txt1);
+        if (hum_ws >= critical_hum) {
+          socket.send("sms");
+        };
+      }
     }
   };
   
 var $buttonOn = document.querySelector('#turn-btn-on');
   $buttonOn.onclick = function() {
-    document.getElementById('indicator').innerHTML = 'ON';
+    document.getElementById('indicator').innerHTML = 'Device status: ON';
     socket.send("ok");
   };
 var $buttonOff = document.querySelector('#turn-btn-off');
   $buttonOff.onclick = function() {
-    document.getElementById('indicator').innerHTML = 'OFF';
+    document.getElementById('indicator').innerHTML = 'Device status: OFF';
     socket.send("no");
   };
 
@@ -175,13 +220,23 @@ var $buttonOff = document.querySelector('#turn-btn-off');
         <div class="span6"><h1 id="Hum"></h1></div>
       </div>
       <div class ="row">
-          <h2 class="indicator_S" id="indicator"></h2>
+          <p class="indicator_S span4" id="indicator"></p> 
       </div>
-      <div class ="row">
+
+      <div class ="row padding_row_btn">
         <input class="btn btn-primary btn-large span6" type="button" id="turn-btn-on" value="Turn On">
         <input class="btn btn-primary btn-large span6" type="button" id="turn-btn-off" value="Turn Off"> 
       </div>
-     
+     <form name="Test" class="row padding_row_form">
+          <div class="row">
+            <p class="span4" style= "font-size: 200%">critical parameters</p>
+          </div>
+          <p class="indicator_L span2" id="indicator_1"></p>
+          <p class="indicator_L span2" id="indicator_2"></p>
+          <input type="text" class="input-medium search-query span2 "  placeholder="HUMIDITY" id="Hum_input">
+          <input type="text" class="input-medium search-query span2 "  placeholder="TEMPERATURE" id="Temp_input">
+          <input class="btn btn-primary btn-large span3" type="button" id="turn-btn-form" value="Apply"> 
+     </form>
     </div>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="js/bootstrap.min.js"></script>
