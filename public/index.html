@@ -155,7 +155,7 @@ var socket = new WebSocket('ws://diplomexam.mybluemix.net/data');
       var SunLight = 255 * Math.pow(item.data,(-10/9));
       //console.log(SunLight);
       document.getElementById("lux_light").innerHTML = "LIGHT Sensor =" + SunLight + " lx";
-      var persent = Math.ceil((SunLight/750)*100); ;
+      var persent = Math.ceil((SunLight/76)*100); ;
       //console.log(persent);
       document.getElementById("persentLight").innerHTML = persent + " %";
       document.getElementById('ProgressBar').style.width = persent+"%";
