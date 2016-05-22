@@ -179,13 +179,13 @@ var socket = new WebSocket('ws://diplomexam.mybluemix.net/data');
       var critical_hum = Number(Txt1);
       
   
-      if (item.topic == "humidity"){
+      if (item.topic == "humidity" && flag_H != true){
           hum_ws = item.data;
           //console.log(hum_ws);
           flag_H = true;
       }
 
-       if (item.topic == "temperature"){
+       if (item.topic == "temperature" && flag_T != true){
           temp_ws = item.data;
           //console.log(temp_ws);
           flag_T = true;
@@ -232,12 +232,12 @@ var socket = new WebSocket('ws://diplomexam.mybluemix.net/data');
   var socket_predict = new WebSocket('ws://diplomexam.mybluemix.net/predict');
   socket_predict.onmessage = function(s) {
     var item_predict = JSON.parse(s.data);
-    if (item_predict.topic == "predicted_hum"){
+    if (item_predict.topic == "predicted_hum" && flag_Hprerdict != true){
        hum_predict = item_predict.data;
        console.log(hum_predict);
        flag_Hprerdict = true;
     }
-    if (item_predict.topic == "predicted_temp"){
+    if (item_predict.topic == "predicted_temp" && flag_Tprerdict != true){
        temp_predict = item_predict.data;
        console.log(temp_predict);
        flag_Tprerdict = true;
