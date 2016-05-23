@@ -191,7 +191,7 @@ var socket = new WebSocket('ws://diplomexam.mybluemix.net/data');
           flag_T = true;
       }
       if (flag_T && flag_H){
-       /* console.log(" ");  
+        console.log(" ");  
         console.log("flag_T= "+flag_T);
         console.log("flag_H= "+flag_H);
         console.log("if (flag_T && flag_H)");
@@ -200,13 +200,13 @@ var socket = new WebSocket('ws://diplomexam.mybluemix.net/data');
         console.log("flag= "+ flag);
         console.log("flagA="+ flagAC);
         console.log(" ");
-        */   
+          
         //if (temp_ws >= critical_temp){
          if (temp_ws >= critical_temp || hum_ws >= critical_hum){
-        //   console.log("if ((temp_ws >= critical_temp) || (hum_ws >= critical_hum))");
+           console.log("if ((temp_ws >= critical_temp) || (hum_ws >= critical_hum))");
            socket.send("sms");
            if (!flag && flagAC == "true"){
-           //   console.log("if (!flag && (flagAC == \"true\"))");
+               console.log("if (!flag && (flagAC == \"true\"))");
                flag = true;
                document.getElementById('indicator').innerHTML = 'Device status: ON'; 
                socket.send("ok"); 
@@ -214,13 +214,13 @@ var socket = new WebSocket('ws://diplomexam.mybluemix.net/data');
         }
         else{
           if (flag && flagAC == "true") { 
-         //         console.log("if (flag && (flagAC == \"true\"))");
+                  console.log("if (flag && (flagAC == \"true\"))");
                   flag = false;
                   document.getElementById('indicator').innerHTML = 'Device status: OFF';
                   socket.send("no"); 
                 }
          } 
-    //  console.log("___________________________________________________________________");
+      console.log("___________________________________________________________________");
       flag_T = false;
       flag_H = false;
       }
@@ -234,19 +234,19 @@ var socket = new WebSocket('ws://diplomexam.mybluemix.net/data');
     var item_predict = JSON.parse(s.data);
     if (item_predict.topic == "predicted_hum" && flag_Hprerdict != true){
        hum_predict = item_predict.data;
-       console.log(hum_predict);
+    //   console.log(hum_predict);
        flag_Hprerdict = true;
     }
     if (item_predict.topic == "predicted_temp" && flag_Tprerdict != true){
        temp_predict = item_predict.data;
-       console.log(temp_predict);
+     //  console.log(temp_predict);
        flag_Tprerdict = true;
     }
-      console.log("flag_Hprerdict =" +  flag_Hprerdict);
-      console.log("flag_Tprerdict =" + flag_Tprerdict);
+    //  console.log("flag_Hprerdict =" +  flag_Hprerdict);
+    //  console.log("flag_Tprerdict =" + flag_Tprerdict);
 
     if (flag_Tprerdict && flag_Hprerdict){
-      console.log("if (flag_Tprerdict && flag_Hprerdict)");  
+    //  console.log("if (flag_Tprerdict && flag_Hprerdict)");  
       document.getElementById('indicator_predict1').innerHTML = hum_predict + " %";
       document.getElementById('indicator_predict2').innerHTML = temp_predict + " *C";  
     flag_Hprerdict = false;
