@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var ibmdb = require('ibm_db');
-global.dbConnString = "DATABASE=BLUDB;HOSTNAME=dashdb-entry-yp-dal09-07.services.dal.bluemix.net;PORT=50000;PROTOCOL=TCPIP;UID=dash5161;PWD=idYGLMIHj35T;"
-
+global.dbConnString = "DATABASE=BLUDB;HOSTNAME=dashdb-entry-yp-dal09-07.services.dal.bluemix.net;PORT=50000;PROTOCOL=TCPIP;UID=dash7587;PWD=b0edf558def1;"
 router.get('/TEMP', function(req, res) {
 	ibmdb.open(dbConnString, function(err, conn) {
 		if (err) {
