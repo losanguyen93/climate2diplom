@@ -166,7 +166,7 @@ var socket = new WebSocket('ws://diplomexam.mybluemix.net/data');
     var item = JSON.parse(e.data);
     if (item.topic == "light"){
       var SunLight = 255 * Math.pow(item.data,(-10/9));
-      //console.log(SunLight);
+      console.log("Sunlight = " + SunLight);
       document.getElementById("lux_light").innerHTML = "LIGHT Sensor =" + SunLight + " lx";
       var persent = Math.ceil((SunLight/76)*100); ;
       //console.log(persent);
@@ -181,13 +181,13 @@ var socket = new WebSocket('ws://diplomexam.mybluemix.net/data');
   
       if (item.topic == "humidity" && flag_H != true){
           hum_ws = item.data;
-          //console.log(hum_ws);
+          console.log("humidityWS = " + hum_ws);
           flag_H = true;
       }
 
        if (item.topic == "temperature" && flag_T != true){
           temp_ws = item.data;
-          //console.log(temp_ws);
+          console.log("temperatureWS = " + temp_ws);
           flag_T = true;
       }
       if (flag_T && flag_H){
@@ -234,19 +234,19 @@ var socket = new WebSocket('ws://diplomexam.mybluemix.net/data');
     var item_predict = JSON.parse(s.data);
     if (item_predict.topic == "predicted_hum" && flag_Hprerdict != true){
        hum_predict = item_predict.data;
-    //   console.log(hum_predict);
+       console.log(hum_predict);
        flag_Hprerdict = true;
     }
     if (item_predict.topic == "predicted_temp" && flag_Tprerdict != true){
        temp_predict = item_predict.data;
-     //  console.log(temp_predict);
+       console.log(temp_predict);
        flag_Tprerdict = true;
     }
-    //  console.log("flag_Hprerdict =" +  flag_Hprerdict);
-    //  console.log("flag_Tprerdict =" + flag_Tprerdict);
+     // console.log("flag_Hprerdict =" +  flag_Hprerdict);
+     // console.log("flag_Tprerdict =" + flag_Tprerdict);
 
     if (flag_Tprerdict && flag_Hprerdict){
-    //  console.log("if (flag_Tprerdict && flag_Hprerdict)");  
+      console.log("if (flag_Tprerdict && flag_Hprerdict)");  
       document.getElementById('indicator_predict1').innerHTML = hum_predict + " %";
       document.getElementById('indicator_predict2').innerHTML = temp_predict + " *C";  
     flag_Hprerdict = false;

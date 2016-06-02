@@ -15,6 +15,9 @@ var cfenv = require('cfenv');
 // create a new express server
 var app = express();
 
+var basicAuth = require('basic-auth-connect');
+app.use(basicAuth('admin', 'admin'));
+
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 
